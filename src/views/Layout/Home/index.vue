@@ -1,6 +1,6 @@
 <template>
   <div>
-  <!-- 一级路由出口 -->
+ <h1>Home</h1>
  <router-view></router-view>
   </div>
 </template>
