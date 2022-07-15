@@ -61,7 +61,7 @@ export default {
       try {
         const res = await login(this.username, this.password)
         console.log(res)
-        if (res.data.status !== 200) return this.$toast(res.data.description)
+        if (res.data.status !== 200) return this.$toast.fail(res.data.description)
         this.$toast.success(res.data.description)
         localStorage.setItem('token', res.data.body.token)
         setTimeout(() => {

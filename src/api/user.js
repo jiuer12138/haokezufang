@@ -6,3 +6,9 @@ export const login = (username, password) =>
     method: 'POST',
     data: { username, password }
   })
+
+export const userInfo = (authorization) =>
+  request({
+    url: '/user',
+    headers: { Authorization: `Bearer ${authorization}` }
+  })

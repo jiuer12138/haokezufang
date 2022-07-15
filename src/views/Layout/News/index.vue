@@ -1,6 +1,6 @@
 <template>
   <div>
-<h1>new</h1>
+资讯......
   </div>
 </template>
 <script>
