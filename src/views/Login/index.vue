@@ -14,7 +14,7 @@
     v-model="username"
     name="username"
     placeholder="请输入账号"
-    :rules="[{ required: true}]"
+    :rules="nameRule"
     center
   />
   <van-field
@@ -22,7 +22,7 @@
     type="password"
     name="password"
     placeholder="请输入密码"
-    :rules="[{ required: true}]"
+    :rules="passwordRule"
     center
   />
   <div style="margin: 16px;">
@@ -36,42 +36,36 @@
 </template>
 <script>
 import { login } from '@/api/user'
+import { nameRule, passwordRule } from './rules'
 export default {
   name: 'Login',
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      nameRule,
+      passwordRule
     }
-  },
-  components: {
-
-  },
-  mounted () {
-
-  },
-  computed: {
-
   },
   methods: {
     onClickLeft () {
       this.$router.back()
     },
     async login () {
+      this.$toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      })
       try {
         const res = await login(this.username, this.password)
         console.log(res)
         if (res.data.status !== 200) return this.$toast.fail(res.data.description)
+        this.$store.commit('setUser', res.data.body)
+        this.$router.push('/home/profiles')
         this.$toast.success(res.data.description)
-        localStorage.setItem('token', res.data.body.token)
-        setTimeout(() => {
-          this.$router.push({
-            path: '/home/profiles',
-            name: 'Profiles'
-          })
-        }, 2000)
       } catch (error) {
         console.log(error)
+        this.$toast.fail('网络请求超时~~')
       }
     }
   }

@@ -64,7 +64,7 @@ export default {
       bg,
       join,
       avatar,
-      token: localStorage.getItem('token'),
+      token: localStorage.getItem('RENT_TOKEN'),
       isLogin: 200
     }
   },
@@ -72,8 +72,9 @@ export default {
   async created () {
     // console.log(localStorage.getItem('token'))
     try {
-      const res = await userInfo(this.token)
-      // console.log(res)
+      console.log(this.token)
+      const res = await userInfo(this.token.token)
+      console.log(res)
       // this.isLogin = res.data.status
       if (res.data.status !== 200) {
         return this.$toast.fail(res.data.description)

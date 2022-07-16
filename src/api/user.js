@@ -10,5 +10,5 @@ export const login = (username, password) =>
 export const userInfo = (authorization) =>
   request({
     url: '/user',
-    headers: { Authorization: `Bearer ${authorization}` }
+    headers: { Authorization: authorization }
   })
