@@ -7,8 +7,7 @@ export const login = (username, password) =>
     data: { username, password }
   })
 
-export const userInfo = (authorization) =>
+export const userInfo = () =>
   request({
-    url: '/user',
-    headers: { Authorization: authorization }
+    url: '/user'
   })

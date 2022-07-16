@@ -1,23 +1,23 @@
 <template>
   <div>
-    <van-image width="100%" :src="isLogin == 200 ? avatar : bg" fit="cover" />
+    <van-image width="100%" :src="isLogin? avatar : bg" fit="cover" />
     <!-- 个人信息部分 -->
-    <div class="My_info" :class="{My_info1:isLogin == 200}">
+    <div class="My_info" :class="{My_info1:isLogin}">
       <van-image
         round
         width="60px"
         height="60px"
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        :src = "Avatar"
       />
-      <p>游客</p>
-      <van-button type="primary" size="small" @click="login" v-if="isLogin !== 200">去登录</van-button>
+      <p>{{UserInfo.nickname}}</p>
+      <van-button type="primary" size="small" @click="login" v-if="!isLogin">去登录</van-button>
       <div v-else class='exit-edit'>
         <van-button type="primary" size="mini" @click="exitFn">退出</van-button>
         <p>编辑个人资料▶</p>
       </div>
     </div>
     <!-- 中间部分 -->
-    <van-grid :column-num="3" class="My_menu" :border="false" :class="{My_menu1 :isLogin == 200 }">
+    <van-grid :column-num="3" clickable class="My_menu" :border="false" :class="{My_menu1 :isLogin }">
       <van-grid-item text="我的收藏">
         <template #icon>
           <span class="iconfont icon-shoucang"></span>
@@ -64,27 +64,21 @@ export default {
       bg,
       join,
       avatar,
-      token: localStorage.getItem('RENT_TOKEN'),
-      isLogin: 200
+      UserInfo: {}
     }
   },
   components: {},
-  async created () {
-    // console.log(localStorage.getItem('token'))
-    try {
-      console.log(this.token)
-      const res = await userInfo(this.token.token)
-      console.log(res)
-      // this.isLogin = res.data.status
-      if (res.data.status !== 200) {
-        return this.$toast.fail(res.data.description)
-      }
-      this.$toast.success(res.data.description)
-    } catch (error) {
-      console.log(error)
+  created () {
+    this.userInfo()
+  },
+  computed: {
+    isLogin () {
+      return !!this.$store.state.user.token
+    },
+    Avatar () {
+      return 'http://liufusong.top:8080' + this.userInfo.avatar
     }
   },
-  computed: {},
   methods: {
     login () {
       this.$router.push({
@@ -92,7 +86,27 @@ export default {
       })
     },
     exitFn () {
-      this.isLogin = 201
+      this.$dialog.confirm({
+        title: '提示',
+        message: '确认要退出吗'
+      })
+        .then(() => {
+          // on confirm
+          this.$store.commit('setUser', {})
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+    async userInfo () {
+      try {
+        const res = await userInfo()
+        console.log(res)
+        this.UserInfo = res.data.body
+        console.log(this.UserInfo)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
