@@ -1,90 +1,75 @@
 <template>
   <div>
+  <!-- 头部搜索框 -->
 <van-search
   v-model="value"
-  show-action
-  label="地址"
-   background="#21b97a"
   placeholder="请输入小区或地址"
-  @search="onSearch"
+  background="#21b97a"
+  show-action
 >
+<template #label>
+    <span @click="goCityList">北京</span><i>▼</i>
+  </template>
+<template #left>
+    <van-icon name="arrow-left" />
+  </template>
   <template #action>
-    <div @click="onSearch">搜索</div>
+    <span class="iconfont icon-ditu1"></span>
   </template>
 </van-search>
-<van-dropdown-menu>
+<!-- 中间下拉选择器 -->
+<van-dropdown-menu active-color="#21b97a">
   <van-dropdown-item v-model="value1" title='区域'>
-    <template #default>
-    <DropDownList :columns="columns"></DropDownList>
-    </template>
+  <template #default>
+    <DropDownList :columns="option1"></DropDownList>
+  </template>
   </van-dropdown-item>
-   <van-dropdown-item v-model="value2" title='方式'>
-    <template #default>
-    <DropDownList :columns="columns1"></DropDownList>
-    </template>
+  <van-dropdown-item v-model="value2" title='方式'>
+  <template #default>
+    <DropDownList :columns="option1"></DropDownList>
+  </template>
   </van-dropdown-item>
   <van-dropdown-item v-model="value3" title='租金'>
     <template #default>
-    <DropDownList :columns="columns2"></DropDownList>
-    </template>
+    <DropDownList :columns="option1"></DropDownList>
+  </template>
   </van-dropdown-item>
-   <van-dropdown-item v-model="value4" title='筛选' is-link @click="showPopup">
-      <van-popup v-model="show" position="right"  :overlay="true"  :style="{ height: '30%' }"/>
+   <van-dropdown-item v-model="value4" title='筛选'  @open="show1 = true" class='Select'>
   </van-dropdown-item>
+    <van-popup v-model="show1" position="right" :style="{ height: '100%',width: '295px' }" get-container="body">123</van-popup>
 </van-dropdown-menu>
 
-<van-cell-group>
-  <VanCell></VanCell>
-</van-cell-group>
+<!-- 下方列表部分 -->
+<div class="ListTab">
+
+</div>
   </div>
 </template>
 <script>
 import DropDownList from '@/components/DropDownList.vue'
-import VanCell from '@/components/VanCell.vue'
 export default {
   data () {
     return {
-      show: false,
+      show1: false,
       value: '',
       value1: '',
       value2: '',
       value3: '',
       value4: '',
-      columns: [
-        {
-          text: '浙江',
-          children: [
-            {
-              text: '杭州',
-              children: [{ text: '西湖区' }, { text: '余杭区' }]
-            },
-            {
-              text: '温州',
-              children: [{ text: '鹿城区' }, { text: '瓯海区' }]
-            }
-          ]
-        },
-        {
-          text: '福建',
-          children: [
-            {
-              text: '福州',
-              children: [{ text: '鼓楼区' }, { text: '台江区' }]
-            },
-            {
-              text: '厦门',
-              children: [{ text: '思明区' }, { text: '海沧区' }]
-            }
-          ]
-        }
+      option1: [
+        { text: '全部商品', value: 0 },
+        { text: '新款商品', value: 1 },
+        { text: '活动商品', value: 2 }
       ],
-      columns1: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
-      columns2: [1000, 2000, 3000, 4000, 5000]
+      option2: [
+        { text: '默认排序', value: 'a' },
+        { text: '好评排序', value: 'b' },
+        { text: '销量排序', value: 'c' }
+      ]
     }
   },
   components: {
-    DropDownList,
-    VanCell
+    DropDownList
   },
   mounted () {
 
@@ -93,17 +78,38 @@ export default {
 
   },
   methods: {
-    onSearch (val) {
-      console.log(val)
-    },
-    showPopup () {
-      this.show = true
+    goCityList () {
+      this.$router.push('/city')
     }
   }
 }
 </script>
 <style scoped lang='less'>
-:deep(.van-dropdown-menu__title--active){
-  color: #21b97a;
+.van-search{
+  padding: 8px 10px;
+  :deep(.van-field__left-icon){
+    padding-left: 14px;
+    border-left: 1px solid #ddd;
+  }
+  :deep(.van-field__control){
+    padding-left: 4px;
+    font-size: 13px;
+    color: #9c9fa1;
+  }
+}
+.van-icon-arrow-left{
+  margin-right: 14px;
+  font-size: 20px;
+  color: #fff;
+}
+.icon-ditu1{
+  margin-left: 5px;
+  font-size: 24px;
+  color: #fff;
+}
+.Select{
+  :deep(.van-overlay){
+    display: none;
+  }
 }
 </style>

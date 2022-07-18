@@ -4,12 +4,20 @@
     <!-- 个人信息部分 -->
     <div class="My_info" :class="{My_info1:isLogin}">
       <van-image
+        v-if="isLogin"
         round
         width="60px"
         height="60px"
         :src = "Avatar"
       />
-      <p>{{UserInfo.nickname}}</p>
+      <van-image
+        v-else
+        round
+        width="60px"
+        height="60px"
+        src = "https://img01.yzcdn.cn/vant/cat.jpeg"
+      />
+      <p>{{isLogin?UserInfo.nickname:'游客'}}</p>
       <van-button type="primary" size="small" @click="login" v-if="!isLogin">去登录</van-button>
       <div v-else class='exit-edit'>
         <van-button type="primary" size="mini" @click="exitFn">退出</van-button>
@@ -18,12 +26,12 @@
     </div>
     <!-- 中间部分 -->
     <van-grid :column-num="3" clickable class="My_menu" :border="false" :class="{My_menu1 :isLogin }">
-      <van-grid-item text="我的收藏">
+      <van-grid-item text="我的收藏" @click="goFavorate">
         <template #icon>
           <span class="iconfont icon-shoucang"></span>
         </template>
       </van-grid-item>
-      <van-grid-item text="我的出租">
+      <van-grid-item text="我的出租" @click="goRent">
         <template #icon>
           <span class="iconfont icon-fangzi"></span>
         </template>
@@ -64,7 +72,8 @@ export default {
       bg,
       join,
       avatar,
-      UserInfo: {}
+      UserInfo: {},
+      Avatar: ''
     }
   },
   components: {},
@@ -74,9 +83,6 @@ export default {
   computed: {
     isLogin () {
       return !!this.$store.state.user.token
-    },
-    Avatar () {
-      return 'http://liufusong.top:8080' + this.userInfo.avatar
     }
   },
   methods: {
@@ -101,12 +107,18 @@ export default {
     async userInfo () {
       try {
         const res = await userInfo()
-        console.log(res)
+        // console.log(res)
         this.UserInfo = res.data.body
-        console.log(this.UserInfo)
+        this.Avatar = 'http://liufusong.top:8080' + res.data.body.avatar
       } catch (error) {
         console.log(error)
       }
+    },
+    goFavorate () {
+      this.$router.push('/favorate')
+    },
+    goRent () {
+      this.$router.push('/rent')
     }
   }
 }

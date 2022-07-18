@@ -11,6 +11,7 @@ request.interceptors.request.use(
     if (token) {
       config.headers.Authorization = token
     }
+    return config
   },
   (err) => {
     return Promise.reject(err)

@@ -11,3 +11,11 @@ export const userInfo = () =>
   request({
     url: '/user'
   })
+export const favorateList = () =>
+  request({
+    url: '/user/favorites'
+  })
+export const rentList = () =>
+  request({
+    url: '/user/houses'
+  })

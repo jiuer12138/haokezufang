@@ -23,7 +23,8 @@
         <template #icon>
        <span class="iconfont icon-geren"></span>
       </template>
-        我的</van-tabbar-item
+      {{!!$store.state.user.token ? '我的': '未登录'}}
+        </van-tabbar-item
       >
     </van-tabbar>
   </div>
