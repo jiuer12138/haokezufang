@@ -1,6 +1,6 @@
 <template>
   <div>
-      <van-picker  :columns="columns" >
+      <van-picker  :columns="columns" value-key='label'>
 <template #columns-bottom>
        <van-button type="default">取消</van-button>
        <van-button type="primary">确定</van-button>
