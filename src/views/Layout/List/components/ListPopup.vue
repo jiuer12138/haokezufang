@@ -1,5 +1,6 @@
 <template>
   <van-popup
+    :lock-scroll="false"
     v-model="isShow"
     position="right"
     :style="{ height: '100%', width: '295px' }"
@@ -10,9 +11,11 @@
       <template #label>
         <div class="VanRow">
           <van-row gutter="0.5rem" justify="space-between">
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
+            <van-col
+              v-for="item in list.roomType"
+              :key="item.value"
+              >{{ item.label }}</van-col
+            >
           </van-row>
         </div>
       </template>
@@ -21,9 +24,9 @@
       <template #label>
         <div class="VanRow">
           <van-row gutter="0.5rem" justify="space-between">
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
+            <van-col v-for="item in list.oriented" :key="item.value">{{
+              item.label
+            }}</van-col>
           </van-row>
         </div>
       </template>
@@ -32,9 +35,9 @@
       <template #label>
         <div class="VanRow">
           <van-row gutter="0.5rem" justify="space-between">
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
+            <van-col v-for="item in list.floor" :key="item.value">{{
+              item.label
+            }}</van-col>
           </van-row>
         </div>
       </template>
@@ -43,21 +46,14 @@
       <template #label>
         <div class="VanRow">
           <van-row gutter="0.5rem" justify="space-between">
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
-            <van-col>span: 8</van-col>
+            <van-col v-for="item in list.characteristic" :key="item.value">{{
+              item.label
+            }}</van-col>
           </van-row>
         </div>
       </template>
     </van-cell>
-    <div class="palce"></div>
+
     <div class="btn">
       <van-button type="default">清除</van-button>
       <van-button type="primary">确定</van-button>
@@ -68,13 +64,24 @@
 export default {
   data () {
     return {
-      isShow: false
+      isShow: false,
+      isActive: false
+    }
+  },
+  props: {
+    list: {
+      type: [Object, Array],
+      required: true
     }
   },
   components: {},
   mounted () {},
   computed: {},
-  methods: {}
+  methods: {
+    chooseRoomType () {
+      this.isActive = !this.isActive
+    }
+  }
 }
 </script>
 <style scoped lang="less">
@@ -82,6 +89,7 @@ export default {
   padding-top: 20px;
   .van-cell__label {
     margin-top: 10px;
+    overflow: hidden;
   }
   .VanCell {
     border-bottom: 1px solid #ddd;
@@ -99,29 +107,31 @@ export default {
       }
     }
   }
-  .palce {
-    height: 50px;
-  }
-}
-.btn {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-
-  .van-button--default {
-    flex: 1;
-    font-size: 18px;
+  .active {
+    border: 1px solid #21b97a;
     color: #21b97a;
-    height: 50px;
+    background-color: #defaef;
   }
-  .van-button--primary {
-    height: 50px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #21b97a;
-    flex: 2;
+  .btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+
+    .van-button--default {
+      flex: 1;
+      font-size: 18px;
+      color: #21b97a;
+      height: 50px;
+    }
+    .van-button--primary {
+      height: 50px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #21b97a;
+      flex: 2;
+    }
   }
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
   <div>
-<NavBar :title="NavTitle"></NavBar>
-<VanCell v-for="(item,index) in rentList" :key=index :obj=item></VanCell>
+    <NavBar :title="NavTitle"></NavBar>
+    <div
+      @click="godetail(item.houseCode)"
+      v-for="(item, index) in rentList"
+      :key="index"
+    >
+      <VanCell :obj="item"></VanCell>
+    </div>
   </div>
 </template>
 <script>
@@ -22,9 +28,7 @@ export default {
   created () {
     this.rent()
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
     async rent () {
       try {
@@ -34,10 +38,12 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    godetail (id) {
+      console.log(id)
+      this.$router.push(`/detail/${id}`)
     }
   }
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

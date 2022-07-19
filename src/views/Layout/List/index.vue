@@ -8,7 +8,7 @@
       show-action
     >
       <template #label>
-        <span @click="goCityList">{{ city }}</span
+        <span @click="goCityList">{{ city.label }}</span
         ><i>▼</i>
       </template>
       <template #left>
@@ -42,7 +42,7 @@
         class="Select"
       >
       </van-dropdown-item>
-      <ListPopup ref='popup'></ListPopup>
+      <ListPopup ref="popup" :list="list"></ListPopup>
     </van-dropdown-menu>
 
     <!-- 下方列表部分 -->
@@ -59,7 +59,7 @@ export default {
   name: 'List',
   data () {
     return {
-      city: '北京',
+      city: { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' },
       cityId: '',
       value: '',
       value1: '',
@@ -68,7 +68,8 @@ export default {
       value4: '',
       AreaDropdownList: [],
       rentType: [],
-      price: []
+      price: [],
+      list: []
     }
   },
   components: {
@@ -76,7 +77,7 @@ export default {
     ListPopup
   },
   created () {
-    this.city = getCity().label
+    this.city = getCity()
     this.cityId = getCity().value
     // console.log(this.city, this.cityId)
     this.findHouse()
@@ -91,6 +92,7 @@ export default {
         const res = await findHouse(this.cityId)
         console.log(res)
         const data = res.data.body
+        this.list = data
         addChildren(data.area.children)
         addChildren(data.subway.children)
         // console.log(res.data.body.area)

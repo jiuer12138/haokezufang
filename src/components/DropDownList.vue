@@ -1,19 +1,17 @@
 <template>
   <div>
-      <van-picker  :columns="columns" value-key='label'>
-<template #columns-bottom>
-       <van-button type="default">取消</van-button>
-       <van-button type="primary">确定</van-button>
+    <van-picker :columns="columns" value-key="label">
+      <template #columns-bottom>
+        <van-button type="default">取消</van-button>
+        <van-button type="primary">确定</van-button>
       </template>
-         </van-picker>
+    </van-picker>
   </div>
 </template>
 <script>
 export default {
   data () {
-    return {
-
-    }
+    return {}
   },
   props: {
     columns: {
@@ -21,33 +19,25 @@ export default {
       default: () => []
     }
   },
-  components: {
-
-  },
-  mounted () {
-
-  },
-  computed: {
-
-  },
-  methods: {
-
-  }
+  components: {},
+  mounted () {},
+  computed: {},
+  methods: {}
 }
 </script>
-<style scoped lang='less'>
-.van-picker{
-  .van-button--default{
+<style scoped lang="less">
+.van-picker {
+  .van-button--default {
     width: 125px;
-    .van-button__content{
+    .van-button__content {
       font-size: 18px;
       color: #21b97a;
     }
   }
-  .van-button--primary{
-    width:250px;
+  .van-button--primary {
+    width: 250px;
     background-color: #21b97a;
-    .van-button__content{
+    .van-button__content {
       font-size: 18px;
     }
   }

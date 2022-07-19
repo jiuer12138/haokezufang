@@ -29,6 +29,10 @@ const routes = [
     ]
   },
   {
+    path: '/detail/:id',
+    component: () => import('@/views/detail')
+  },
+  {
     path: '/city',
     component: () => import('@/views/City')
   },
