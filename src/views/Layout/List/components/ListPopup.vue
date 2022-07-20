@@ -1,71 +1,96 @@
 <template>
-  <van-popup
-    :lock-scroll="false"
-    v-model="isShow"
-    position="right"
-    :style="{ height: '100%', width: '295px' }"
-    get-container="body"
-    class="Selections"
-  >
-    <van-cell title="户型" class="VanCell">
-      <template #label>
-        <div class="VanRow">
-          <van-row gutter="0.5rem" justify="space-between">
-            <van-col
-              v-for="item in list.roomType"
-              :key="item.value"
-              >{{ item.label }}</van-col
-            >
-          </van-row>
-        </div>
-      </template>
-    </van-cell>
-    <van-cell title="朝向" class="VanCell">
-      <template #label>
-        <div class="VanRow">
-          <van-row gutter="0.5rem" justify="space-between">
-            <van-col v-for="item in list.oriented" :key="item.value">{{
-              item.label
-            }}</van-col>
-          </van-row>
-        </div>
-      </template>
-    </van-cell>
-    <van-cell title="楼层" class="VanCell">
-      <template #label>
-        <div class="VanRow">
-          <van-row gutter="0.5rem" justify="space-between">
-            <van-col v-for="item in list.floor" :key="item.value">{{
-              item.label
-            }}</van-col>
-          </van-row>
-        </div>
-      </template>
-    </van-cell>
-    <van-cell title="房屋亮点" class="VanCell">
-      <template #label>
-        <div class="VanRow">
-          <van-row gutter="0.5rem" justify="space-between">
-            <van-col v-for="item in list.characteristic" :key="item.value">{{
-              item.label
-            }}</van-col>
-          </van-row>
-        </div>
-      </template>
-    </van-cell>
-
-    <div class="btn">
-      <van-button type="default">清除</van-button>
-      <van-button type="primary">确定</van-button>
-    </div>
-  </van-popup>
+  <div>
+    <van-popup
+      v-model="isShow"
+      position="right"
+      :style="{ height: '100%' }"
+      get-container="body"
+      class="Selections"
+    >
+      <van-cell title="户型" class="VanCell">
+        <template #label>
+          <div class="VanRow">
+            <van-row gutter="0.5rem" justify="space-between">
+              <van-col
+                v-for="item in list.roomType"
+                :key="item.value"
+                :class="{ active: Active.indexOf(item.value) !== -1 }"
+                @click="selectItem(item.value)"
+                >{{ item.label }}</van-col
+              >
+            </van-row>
+          </div>
+        </template>
+      </van-cell>
+      <van-cell title="朝向" class="VanCell">
+        <template #label>
+          <div class="VanRow">
+            <van-row gutter="0.5rem" justify="space-between">
+              <van-col
+                v-for="item in list.oriented"
+                :key="item.value"
+                :class="{ active: Active.indexOf(item.value) !== -1 }"
+                @click="selectItem(item.value)"
+                >{{ item.label }}</van-col
+              >
+            </van-row>
+          </div>
+        </template>
+      </van-cell>
+      <van-cell title="楼层" class="VanCell">
+        <template #label>
+          <div class="VanRow">
+            <van-row gutter="0.5rem" justify="space-between">
+              <van-col
+                v-for="item in list.floor"
+                :key="item.value"
+                :class="{ active: Active.indexOf(item.value) !== -1 }"
+                @click="selectItem(item.value)"
+                >{{ item.label }}</van-col
+              >
+            </van-row>
+          </div>
+        </template>
+      </van-cell>
+      <van-cell title="房屋亮点" class="VanCell">
+        <template #label>
+          <div class="VanRow">
+            <van-row gutter="0.5rem" justify="space-between">
+              <van-col
+                v-for="item in list.characteristic"
+                :key="item.value"
+                :class="{ active: Active.indexOf(item.value) !== -1 }"
+                @click="selectItem(item.value)"
+                >{{ item.label }}</van-col
+              >
+            </van-row>
+          </div>
+        </template>
+      </van-cell>
+      <div class="palce"></div>
+    </van-popup>
+    <van-popup
+      class="btnPopup"
+      v-model="isShow"
+      position="right"
+      get-container="body"
+      :overlay="false"
+    >
+      <div class="btn">
+        <van-button type="default" @click="clearFn">清除</van-button>
+        <van-button type="primary">确定</van-button>
+      </div>
+    </van-popup>
+  </div>
 </template>
 <script>
 export default {
   data () {
     return {
       isShow: false,
-      isActive: false
+      container: null,
+      isActive: false,
+      Active: []
     }
   },
   props: {
@@ -75,17 +100,30 @@ export default {
     }
   },
   components: {},
-  mounted () {},
+  created () {},
   computed: {},
   methods: {
     chooseRoomType () {
       this.isActive = !this.isActive
+    },
+    selectItem (id) {
+      if (this.Active.indexOf(id) === -1) {
+        this.Active.push(id)
+      } else {
+        this.Active = this.Active.filter((item) => item !== id)
+      }
+      console.log(this.Active)
+    },
+    clearFn () {
+      this.Active = []
+      this.isShow = false
     }
   }
 }
 </script>
 <style scoped lang="less">
 .Selections {
+  width: 295px;
   padding-top: 20px;
   .van-cell__label {
     margin-top: 10px;
@@ -112,6 +150,14 @@ export default {
     color: #21b97a;
     background-color: #defaef;
   }
+}
+.palce {
+  height: 50px;
+}
+.btnPopup {
+  margin-top:46.8vh;
+  height: 50px;
+  width: 295px;
   .btn {
     position: fixed;
     bottom: 0;

@@ -7,3 +7,8 @@ export const HouseDetail = (id) =>
   request({
     url: `/houses/${id}`
   })
+export const selectHouse = (params) =>
+  request({
+    url: '/houses',
+    params
+  })

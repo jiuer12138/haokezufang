@@ -37,7 +37,7 @@ export default {
       indexList: [],
       CityList: [],
       finished: false,
-      currentCity: [{ label: '北京' }]
+      currentCity: [{ label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }]
     }
   },
   components: {
