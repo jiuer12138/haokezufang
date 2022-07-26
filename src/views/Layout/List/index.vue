@@ -9,11 +9,11 @@
       show-action
     >
       <template #label>
-        <span @click="goCityList">{{ city.label }}</span
+        <span @click="goCityList">{{ city }}</span
         ><i>▼</i>
       </template>
       <template #left>
-        <van-icon name="arrow-left" />
+        <van-icon name="arrow-left" @click="$router.back()" />
       </template>
       <template #action>
         <span class="iconfont icon-ditu1"></span>
@@ -56,7 +56,7 @@
           class="Select"
         >
         </van-dropdown-item>
-        <ListPopup ref="popup" :list="list"></ListPopup>
+        <ListPopup ref="popup" :list="list" @Filters="FiltersFN"></ListPopup>
       </van-dropdown-menu>
     </div>
     <!-- 下方列表部分 -->
@@ -102,9 +102,9 @@ export default {
     VanCell
   },
   created () {
-    this.city = getCity()
-    this.cityId = getCity().value
-    // console.log(this.city, this.cityId)
+    this.city = getCity()?.label ?? { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.label
+    this.cityId = getCity()?.value ?? { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.value
+    console.log(this.city, this.cityId)
     this.findHouse()
     this.selectHouse()
   },
@@ -120,16 +120,6 @@ export default {
         start: 1,
         end: 20
       }
-      // const params = {}
-      // params.cityId = this.cityId
-      // params.area = this.cityarea
-      // params.subway = this.citysubway
-      // params.price = this.cityPrice
-      // params.rentType = this.cityRentType
-      // params.more = this.cityMore
-      // params.start = 1
-      // params.end = 20
-      // return params
     }
   },
   methods: {
@@ -159,6 +149,11 @@ export default {
         const res = await selectHouse(this.params)
         // console.log(res)
         this.houseList = res.data.body.list
+        this.cityarea = ''
+        this.citysubway = ''
+        this.cityPrice = ''
+        this.cityRentType = ''
+        this.cityMore = ''
       } catch (error) {
         console.log(error)
       }
@@ -170,15 +165,23 @@ export default {
     },
     getAreaValueFn (value) {
       this.cityarea = value
-      console.log(this.cityarea)
+      this.selectHouse()
+      // console.log(this.cityarea)
     },
     getrentTypeValueFn (value) {
       this.cityRentType = value
-      console.log(this.cityRentType)
+      this.selectHouse()
+      // console.log(this.cityRentType)
     },
     getpriceValueFn (value) {
       this.cityPrice = value
-      console.log(this.cityPrice)
+      this.selectHouse()
+      // console.log(this.cityPrice)
+    },
+    FiltersFN (value) {
+      this.cityMore = value
+      this.selectHouse()
+      // console.log(this.cityMore)
     }
   }
 }

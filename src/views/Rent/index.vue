@@ -40,6 +40,7 @@ export default {
       }
     },
     godetail (id) {
+      console.log(1)
       console.log(id)
       this.$router.push(`/detail/${id}`)
     }

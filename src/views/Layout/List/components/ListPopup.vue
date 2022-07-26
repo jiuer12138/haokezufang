@@ -78,7 +78,7 @@
     >
       <div class="btn">
         <van-button type="default" @click="clearFn">清除</van-button>
-        <van-button type="primary">确定</van-button>
+        <van-button type="primary" @click="chooseFn">确定</van-button>
       </div>
     </van-popup>
   </div>
@@ -116,6 +116,10 @@ export default {
     },
     clearFn () {
       this.Active = []
+      this.isShow = false
+    },
+    chooseFn () {
+      this.$emit('Filters', this.Active.join())
       this.isShow = false
     }
   }
@@ -155,7 +159,7 @@ export default {
   height: 50px;
 }
 .btnPopup {
-  margin-top:46.8vh;
+  margin-top: 46.8vh;
   height: 50px;
   width: 295px;
   .btn {

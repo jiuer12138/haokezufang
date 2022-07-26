@@ -39,8 +39,12 @@ export default {
         }
         // console.log(this.selection)
         // console.log(value[1].value)
+      } else if (value.length === 3 && value[1].label === '不限') {
+        this.selection = ''
       } else if (value.length === 1 && value[0].label !== '不限') {
         this.selection = value[0].value
+      } else if (value.length === 1 && value[0].label === '不限') {
+        this.selection = ''
       }
       // console.log(value)
       this.$emit('getValue', this.selection)

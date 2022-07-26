@@ -19,3 +19,17 @@ export const rentList = () =>
   request({
     url: '/user/houses'
   })
+export const addCollect = (id) =>
+  request({
+    url: `/user/favorites/${id}`,
+    method: 'POST'
+  })
+export const removeCollect = (id) =>
+  request({
+    url: `/user/favorites/${id}`,
+    method: 'DELETE'
+  })
+export const judgeCollect = (id) =>
+  request({
+    url: `/user/favorites/${id}`
+  })

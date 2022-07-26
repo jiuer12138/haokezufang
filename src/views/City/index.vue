@@ -29,7 +29,7 @@
 import NavBar from '@/components/NavBar.vue'
 import { cityList, hotCityList } from '@/api/area'
 import { resolveIndex, resolveData } from './resolveDate'
-import { setCity, getCity } from '@/utils'
+import { getCity, setACity } from '@/utils'
 export default {
   data () {
     return {
@@ -45,7 +45,7 @@ export default {
   },
   created () {
     this.getList()
-    this.currentCity[0].label = getCity().label
+    this.currentCity[0].label = getCity()?.label ?? { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.label
   },
   methods: {
     getTitle (item) {
@@ -54,7 +54,7 @@ export default {
       return item
     },
     chooseCity (obj) {
-      setCity(obj)
+      setACity(obj)
       this.currentCity[0].label = getCity().label
       this.$router.back()
     },
