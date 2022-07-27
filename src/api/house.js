@@ -12,3 +12,7 @@ export const selectHouse = (params) =>
     url: '/houses',
     params
   })
+export const getHouseConditions = () =>
+  request({
+    url: '/houses/params'
+  })

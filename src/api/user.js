@@ -33,3 +33,15 @@ export const judgeCollect = (id) =>
   request({
     url: `/user/favorites/${id}`
   })
+export const rental = (data) =>
+  request({
+    url: '/user/houses',
+    method: 'POST',
+    data: data
+  })
+export const upImage = (fm) =>
+  request({
+    url: '/houses/image',
+    method: 'POST',
+    data: fm
+  })

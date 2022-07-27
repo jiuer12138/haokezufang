@@ -16,7 +16,9 @@
         <van-icon name="arrow-left" @click="$router.back()" />
       </template>
       <template #action>
-        <span class="iconfont icon-ditu1"></span>
+        <div class="roundBorder">
+          <span class="iconfont icon-ditu1"></span>
+        </div>
       </template>
     </van-search>
     <!-- 中间下拉选择器 -->
@@ -65,6 +67,7 @@
         v-for="item in houseList"
         :key="item.houseCode"
         :obj="item"
+        @click.native="godetail(item.houseCode)"
       ></VanCell>
     </div>
     <div class="place"></div>
@@ -102,8 +105,12 @@ export default {
     VanCell
   },
   created () {
-    this.city = getCity()?.label ?? { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.label
-    this.cityId = getCity()?.value ?? { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.value
+    this.city =
+      getCity()?.label ??
+      { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.label
+    this.cityId =
+      getCity()?.value ??
+      { label: '北京', value: 'AREA|88cff55c-aaa4-e2e0' }.value
     console.log(this.city, this.cityId)
     this.findHouse()
     this.selectHouse()
@@ -123,6 +130,11 @@ export default {
     }
   },
   methods: {
+    godetail (id) {
+      console.log(1)
+      console.log(id)
+      this.$router.push(`/detail/${id}`)
+    },
     goCityList () {
       this.$router.push('/city')
     },
@@ -217,9 +229,19 @@ export default {
   font-size: 20px;
   color: #fff;
 }
+.roundBorder {
+  width: 25px;
+  height: 25px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+}
+.van-search__action {
+  line-height: 0.70667rem;
+  background-color: #21b97a;
+}
 .icon-ditu1 {
-  margin-left: 5px;
-  font-size: 24px;
+  margin-left: 2px;
+  font-size: 20px;
   color: #fff;
 }
 .Select {

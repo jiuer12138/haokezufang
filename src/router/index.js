@@ -45,6 +45,15 @@ const routes = [
     component: () => import('@/views/Rent')
   },
   {
+    path: '/rent/add',
+    name: 'add',
+    component: () => import('@/views/Add')
+  },
+  {
+    path: '/rent/search',
+    component: () => import('@/views/RentSearch')
+  },
+  {
     path: '/login',
     component: () => import('@/views/Login')
   },

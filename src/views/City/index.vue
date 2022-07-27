@@ -29,7 +29,8 @@
 import NavBar from '@/components/NavBar.vue'
 import { cityList, hotCityList } from '@/api/area'
 import { resolveIndex, resolveData } from './resolveDate'
-import { getCity, setACity } from '@/utils'
+import { getCity } from '@/utils'
+
 export default {
   data () {
     return {
@@ -54,7 +55,7 @@ export default {
       return item
     },
     chooseCity (obj) {
-      setACity(obj)
+      this.$store.commit('setACity', obj)
       this.currentCity[0].label = getCity().label
       this.$router.back()
     },

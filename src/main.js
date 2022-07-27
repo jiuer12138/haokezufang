@@ -2,12 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Vant from 'vant'
+import Vant, { Lazyload } from 'vant'
 import '@/assets/icons/iconfont.css'
 import 'vant/lib/index.css'
 import 'amfe-flexible'
 
 Vue.use(Vant)
+Vue.use(Lazyload)
 Vue.config.productionTip = false
 
 new Vue({

@@ -9,3 +9,8 @@ export const hotCityList = () =>
   request({
     url: '/area/hot'
   })
+export const communitySearch = (name, id) =>
+  request({
+    url: '/area/community',
+    params: { name, id }
+  })

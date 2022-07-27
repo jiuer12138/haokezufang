@@ -1,6 +1,12 @@
 <template>
   <van-grid :column-num="5" :border="false">
-    <van-grid-item v-for="item in list" :key="item" :text="item">
+    <van-grid-item
+      v-for="(item, index) in list"
+      :key="index"
+      :text="item"
+      @click="selectItem(item)"
+      :class="{ active: isActiveList.includes(item) }"
+    >
       <template #icon>
         <i :class="iconClass(item)"></i>
       </template>
@@ -23,13 +29,18 @@ export default {
         宽带: 'icon-wifi',
         衣柜: 'icon-yigui',
         天然气: 'icon-tianranqi'
-      }
+      },
+      isActiveList: []
     }
   },
   props: {
     list: {
       type: Array,
       required: true
+    },
+    rentList: {
+      type: Array,
+      default: () => []
     }
   },
   components: {},
@@ -41,7 +52,18 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    selectItem (item) {
+      if (this.rentList.length === 0) return
+      if (this.isActiveList.includes(item)) {
+        this.isActiveList = this.isActiveList.filter((ele) => ele !== item)
+      } else {
+        this.isActiveList.push(item)
+      }
+      console.log(this.isActiveList)
+      this.$emit('getSupportings', this.isActiveList)
+    }
+  }
 }
 </script>
 <style scoped lang="less">
@@ -51,9 +73,15 @@ export default {
   .van-grid-item {
     height: 71px;
     padding: 10px 0;
-      :deep(.van-grid-item__text){
-        font-size:16px;
-      }
+    :deep(.van-grid-item__text) {
+      font-size: 15px;
+    }
+  }
+  :deep(.van-grid-item__text) {
+    color: unset;
+  }
+  .active {
+    color: #21b97a;
   }
   i {
     font-size: 23px;
